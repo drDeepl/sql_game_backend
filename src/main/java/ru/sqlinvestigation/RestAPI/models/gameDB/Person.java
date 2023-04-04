@@ -1,8 +1,8 @@
 package ru.sqlinvestigation.RestAPI.models.gameDB;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
+
 @Entity
 @Table(name = "person")
 public class Person {
@@ -13,13 +13,12 @@ public class Person {
 
     @Column(name = "name")
     //@NotEmpty(message = "Name should not be empty")
-    @Size(min = 2, max = 30, message = "Name should be between 2 and 30 characters !")
+    //@Size(min = 2, max = 30, message = "Name should be between 2 and 30 characters !")
     private String name;
 
-    @Column(name = "license_id")
-    @Min(value = 0, message = "Age != 0!")
-    private int licenseId;
-
+    @OneToOne
+    @JoinColumn(name = "license_id", referencedColumnName = "id")
+    private DriverLicense driverLicense;
     @Column(name = "address_number")
     //@NotEmpty(message = "Email should be not empty")
     private int addressNumber;
@@ -28,49 +27,16 @@ public class Person {
     //@NotEmpty(message = "Email should be not empty")
     private String addressStreetName;
 
-    @Column(name = "ssn")
-    private String ssn;
+    @OneToOne
+    @JoinColumn(name = "ssn", referencedColumnName = "ssn")
+    private Income income;
 
-    public int getLicenseId() {
-        return licenseId;
+    public Income getIncome() {
+        return income;
     }
 
-    public void setLicenseId(int licenseId) {
-        this.licenseId = licenseId;
-    }
-
-    public int getAddressNumber() {
-        return addressNumber;
-    }
-
-    public void setAddressNumber(int addressNumber) {
-        this.addressNumber = addressNumber;
-    }
-
-    public String getAddressStreetName() {
-        return addressStreetName;
-    }
-
-    public void setAddressStreetName(String addressStreetName) {
-        this.addressStreetName = addressStreetName;
-    }
-
-    public String getSsn() {
-        return ssn;
-    }
-
-    public void setSsn(String ssn) {
-        this.ssn = ssn;
-    }
-
-
-
-    public Person() {
-
-    }
-
-    public Person(String name) {
-        this.name = name;
+    public void setIncome(Income income) {
+        this.income = income;
     }
 
     public int getId() {
@@ -89,5 +55,36 @@ public class Person {
         this.name = name;
     }
 
+    public int getAddressNumber() {
+        return addressNumber;
+    }
 
+    public void setAddressNumber(int addressNumber) {
+        this.addressNumber = addressNumber;
+    }
+
+    public String getAddressStreetName() {
+        return addressStreetName;
+    }
+
+    public void setAddressStreetName(String addressStreetName) {
+        this.addressStreetName = addressStreetName;
+    }
+
+
+    public DriverLicense getDriverLicense() {
+        return driverLicense;
+    }
+
+    public void setDriverLicense(DriverLicense driverLicense) {
+        this.driverLicense = driverLicense;
+    }
+
+    public Person(String name) {
+        this.name = name;
+    }
+
+    public Person() {
+
+    }
 }

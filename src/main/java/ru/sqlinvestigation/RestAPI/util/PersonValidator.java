@@ -8,9 +8,7 @@ import org.springframework.validation.Validator;
 import ru.sqlinvestigation.RestAPI.models.userDB.Person;
 import ru.sqlinvestigation.RestAPI.services.userDB.PersonDetailsService;
 
-/**
- * @author Neil Alishev
- */
+
 @Component
 public class PersonValidator implements Validator {
 

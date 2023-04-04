@@ -15,16 +15,20 @@ import javax.validation.Valid;
 import java.util.Collections;
 import java.util.List;
 
-@Transactional(transactionManager = "gameTransactionManager")
+//@Transactional(transactionManager = "gameTransactionManager")
 @RestController // @Controller + @ResponseBody над каждым методом
 @RequestMapping("api/gameDB/person")
 public class PersonController {
-
     private final PersonService personService;
 
     @Autowired
     public PersonController(PersonService personService) {
         this.personService = personService;
+    }
+
+    @GetMapping("/hello")
+    public String hello() {
+        return "hello!";
     }
 
     @GetMapping("/index")
@@ -51,5 +55,4 @@ public class PersonController {
         //Отправляем HTTP ответ с пустым телом и со статусом 200
         return ResponseEntity.ok(HttpStatus.OK);
     }
-
 }

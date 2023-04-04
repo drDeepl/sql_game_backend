@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Service
 //@Transactional(readOnly = true)
-@Transactional(readOnly = true, transactionManager = "userTransactionManager")
+//@Transactional(readOnly = true, transactionManager = "userTransactionManager")
 public class UsersService {
 
     private final UsersRepository usersRepository;
@@ -31,7 +31,7 @@ public class UsersService {
         return foundPerson.orElseThrow(PersonNotFoundException::new);
     }
 
-    @Transactional
+    @Transactional(transactionManager = "userTransactionManager")
     public void save(Users users){
         usersRepository.save(users);
     }
