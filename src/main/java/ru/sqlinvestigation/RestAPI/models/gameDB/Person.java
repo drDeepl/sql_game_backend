@@ -2,10 +2,7 @@ package ru.sqlinvestigation.RestAPI.models.gameDB;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-
-
 @Entity
 @Table(name = "person")
 public class Person {
@@ -15,7 +12,7 @@ public class Person {
     private int id;
 
     @Column(name = "name")
-    @NotEmpty(message = "Name should not be empty")
+    //@NotEmpty(message = "Name should not be empty")
     @Size(min = 2, max = 30, message = "Name should be between 2 and 30 characters !")
     private String name;
 
@@ -24,11 +21,11 @@ public class Person {
     private int licenseId;
 
     @Column(name = "address_number")
-    @NotEmpty(message = "Email should be not empty")
-    private String addressNumber;
+    //@NotEmpty(message = "Email should be not empty")
+    private int addressNumber;
 
     @Column(name = "address_street_name")
-    @NotEmpty(message = "Email should be not empty")
+    //@NotEmpty(message = "Email should be not empty")
     private String addressStreetName;
 
     @Column(name = "ssn")
@@ -42,11 +39,11 @@ public class Person {
         this.licenseId = licenseId;
     }
 
-    public String getAddressNumber() {
+    public int getAddressNumber() {
         return addressNumber;
     }
 
-    public void setAddressNumber(String addressNumber) {
+    public void setAddressNumber(int addressNumber) {
         this.addressNumber = addressNumber;
     }
 

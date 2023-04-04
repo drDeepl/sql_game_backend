@@ -9,6 +9,8 @@ user.datasource.username=
 user.datasource.password=
 
 
+jwt_secret=
+
 
 
 
