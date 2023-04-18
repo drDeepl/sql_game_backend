@@ -1,5 +1,7 @@
 package ru.sqlinvestigation.RestAPI.models.gameDB;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
@@ -16,6 +18,7 @@ public class Person {
     //@Size(min = 2, max = 30, message = "Name should be between 2 and 30 characters !")
     private String name;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "license_id", referencedColumnName = "id")
     private DriverLicense driverLicense;

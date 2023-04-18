@@ -36,7 +36,7 @@ public class PersonController {
         return personService.findAll(); // Jackson конвертирует эти объекты в JSON
     }
 
-    @PostMapping()
+    @PostMapping("/create")
     public ResponseEntity<HttpStatus> create(@RequestBody @Valid Person person,
                                              BindingResult bindingResult ){
         if (bindingResult.hasErrors()){

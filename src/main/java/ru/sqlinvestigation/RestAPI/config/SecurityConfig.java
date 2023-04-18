@@ -2,10 +2,12 @@ package ru.sqlinvestigation.RestAPI.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -30,6 +32,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.jwtFilter = jwtFilter;
     }
 
+    String[] pathSwagger = new String[] {
+            "/v3/api-docs/", "/swagger-ui",
+            "/v2/api-docs", "/swagger-resources/configuration/ui",
+            "/swagger-resources", "/swagger-resources/configuration/security",
+            "/swagger-ui.html", "/webjars/**"
+    };
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // конфигурируем сам Spring Security
@@ -38,7 +46,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/admin").hasRole("ADMIN")
-                .antMatchers("/auth/login", "/auth/registration", "/error").permitAll()
+                .antMatchers("/").hasAnyRole()
+                .antMatchers(pathSwagger).permitAll()
+                .antMatchers("/auth/login", "/auth/registration",
+                        "/api/get/**","/api/sayHello",
+                        "/error").permitAll()
                 .anyRequest().hasAnyRole("USER", "ADMIN")
                 .and()
                 .formLogin().loginPage("/auth/login")
@@ -54,6 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+
     }
 
     // Настраиваем аутентификацию
@@ -62,6 +75,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(personDetailsService)
                 .passwordEncoder(getPasswordEncoder());
     }
+
+    @Override
+    public void configure(WebSecurity web) {
+        web.ignoring().antMatchers("/v3/api-docs/**",
+                "/swagger-ui.html",
+                "/swagger-ui/**");
+    }
+
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {
@@ -74,3 +95,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 }
+
