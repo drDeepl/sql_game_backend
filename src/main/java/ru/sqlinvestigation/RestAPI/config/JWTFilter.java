@@ -15,9 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * @author Neil Alishev
- */
 @Component
 public class JWTFilter extends OncePerRequestFilter {
 

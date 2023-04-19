@@ -20,9 +20,6 @@ import ru.sqlinvestigation.RestAPI.util.PersonValidator;
 import javax.validation.Valid;
 import java.util.Map;
 
-/**
- * @author Neil Alishev
- */
 @RestController
 @RequestMapping("/auth")
 public class AuthController {

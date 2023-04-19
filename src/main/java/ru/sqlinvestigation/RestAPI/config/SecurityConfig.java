@@ -16,9 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import ru.sqlinvestigation.RestAPI.services.userDB.PersonDetailsService;
 
-/**
- * @author Neil Alishev
- */
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -82,7 +79,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/swagger-ui.html",
                 "/swagger-ui/**");
     }
-
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {

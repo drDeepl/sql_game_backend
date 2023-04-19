@@ -1,4 +1,3 @@
-//package ru.alishev.springcourse.FirstRestApp;
 //
 //import org.junit.Test;
 //import org.junit.runner.RunWith;
@@ -8,7 +7,6 @@
 //import org.springframework.http.HttpStatus;
 //import org.springframework.test.context.junit4.SpringRunner;
 //import org.springframework.test.web.servlet.MockMvc;
-//import ru.alishev.springcourse.FirstRestApp.controllers.PeopleController;
 //
 //import static org.junit.matchers.JUnitMatchers.containsString;
 //import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -16,11 +14,11 @@
 //import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 //import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 //
-////RunWith - аннотация JUint (производит тестирование)
-////SpringRunner - окружение, в котором будет стартовать тестирование
+////RunWith - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ JUint (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+////SpringRunner - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 //@RunWith(SpringRunner.class)
 //@SpringBootTest
-////Создает окружение MVC
+////пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ MVC
 //@AutoConfigureMockMvc
 //public class MyTestClass {
 //    @Autowired
@@ -29,16 +27,16 @@
 //    @Autowired
 //    private PeopleController controller;
 //
-//    //Тест - тестовые методы
+//    //пїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 //    @Test
 //    public void testMethod() throws Exception{
-//        //Слой mockMVC
+//        //пїЅпїЅпїЅпїЅ mockMVC
 //        //
 //        this.mockMvc.perform(get("/people"))
 //                .andDo(print())
-//                //статус запроса будет 200
+//                //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ 200
 //                .andExpect(status().isOk())
-//                //Вернётся контент. Сравниваем что содержит Hello guest
+//                //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Hello guest
 //                .andExpect(content().string(containsString("Hello guest")));
 //    }
 //

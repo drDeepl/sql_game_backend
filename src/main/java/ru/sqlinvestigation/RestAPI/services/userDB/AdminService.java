@@ -4,9 +4,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * @author Neil Alishev
- */
 //@Transactional(transactionManager = "userTransactionManager")
 @Service
 public class AdminService {

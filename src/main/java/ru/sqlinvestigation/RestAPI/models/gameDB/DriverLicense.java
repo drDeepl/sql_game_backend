@@ -1,113 +1,31 @@
 package ru.sqlinvestigation.RestAPI.models.gameDB;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Cascade;
-
 import javax.persistence.*;
 
 @Entity
-@Table(name = "drivers_license")
+@Table(name = "driver_license")
 public class DriverLicense {
     @Id
-    @Column(name = "id")
+    @Column(name = "license_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long license_id;
 
-    @Column(name = "age")
-    private int age;
-
-    @Column(name = "height")
-    private int height;
-
-    @Column(name = "eye_color")
-    private String eyeColor;
-
-    @Column(name = "hair_color")
-    private String hairColor;
-
-    @Column(name = "gender")
-    private String gender;
-
-    @Column(name = "plate_number")
-    private String plateNumber;
-
-    @Column(name = "car_make")
-    private String carMake;
-
-    @Column(name = "car_model")
-    private String carModel;
-
-    //@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
-    @JsonIgnore
-    @OneToOne(mappedBy = "driverLicense")
+    @ManyToOne()
+    @JoinColumn(name = "person_id", referencedColumnName = "person_id")
     private Person person;
+    private String plate_number;
+    private String car_make;
+    private String car_model;
 
-    public int getId() {
-        return id;
+    public DriverLicense() {
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public long getLicense_id() {
+        return license_id;
     }
 
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public String getEyeColor() {
-        return eyeColor;
-    }
-
-    public void setEyeColor(String eyeColor) {
-        this.eyeColor = eyeColor;
-    }
-
-    public String getHairColor() {
-        return hairColor;
-    }
-
-    public void setHairColor(String hairColor) {
-        this.hairColor = hairColor;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getPlateNumber() {
-        return plateNumber;
-    }
-
-    public void setPlateNumber(String plateNumber) {
-        this.plateNumber = plateNumber;
-    }
-
-    public String getCarMake() {
-        return carMake;
-    }
-
-    public void setCarMake(String carMake) {
-        this.carMake = carMake;
-    }
-
-    public String getCarModel() {
-        return carModel;
+    public void setLicense_id(long license_id) {
+        this.license_id = license_id;
     }
 
     public Person getPerson() {
@@ -118,8 +36,27 @@ public class DriverLicense {
         this.person = person;
     }
 
-    public void setCarModel(String carModel) {
-        this.carModel = carModel;
+    public String getPlate_number() {
+        return plate_number;
     }
 
+    public void setPlate_number(String plate_number) {
+        this.plate_number = plate_number;
+    }
+
+    public String getCar_make() {
+        return car_make;
+    }
+
+    public void setCar_make(String car_make) {
+        this.car_make = car_make;
+    }
+
+    public String getCar_model() {
+        return car_model;
+    }
+
+    public void setCar_model(String car_model) {
+        this.car_model = car_model;
+    }
 }

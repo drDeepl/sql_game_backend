@@ -9,9 +9,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import ru.sqlinvestigation.RestAPI.security.PersonDetails;
 import ru.sqlinvestigation.RestAPI.services.userDB.AdminService;
 
-/**
- * @author Neil Alishev
- */
 @Controller
 public class HelloController {
     private final AdminService adminService;
