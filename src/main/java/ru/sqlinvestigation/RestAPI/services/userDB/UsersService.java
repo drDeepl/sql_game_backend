@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.sqlinvestigation.RestAPI.models.userDB.Users;
 import ru.sqlinvestigation.RestAPI.repositories.userDB.UsersRepository;
-import ru.sqlinvestigation.RestAPI.util.PersonNotFoundException;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +28,7 @@ public class UsersService {
 
     public Users findOne(int id) {
         Optional<Users> foundPerson = usersRepository.findById(id);
-        return foundPerson.orElseThrow(PersonNotFoundException::new);
+        return foundPerson.orElseThrow(RuntimeException::new);
     }
 
     @Transactional(transactionManager = "userTransactionManager")

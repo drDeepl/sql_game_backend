@@ -1,52 +1,48 @@
 package ru.sqlinvestigation.RestAPI.controllers.gameDB;
 
 import org.springdoc.api.ErrorMessage;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.webjars.NotFoundException;
-import ru.sqlinvestigation.RestAPI.models.gameDB.Person;
-import ru.sqlinvestigation.RestAPI.services.gameDB.PersonService;
+import ru.sqlinvestigation.RestAPI.models.gameDB.Pet;
+import ru.sqlinvestigation.RestAPI.services.gameDB.PetService;
 
 import javax.validation.Valid;
 import java.util.Collections;
 import java.util.List;
 
 @RestController // @Controller + @ResponseBody над каждым методом
-@RequestMapping("api/gameDB/person")
-public class PersonController {
-    private final PersonService personService;
+@RequestMapping("api/gameDB/pet")
+public class PetController {
+    private final PetService petService;
 
-    @Autowired
-    public PersonController(PersonService personService) {
-        this.personService = personService;
+    public PetController(PetService petService) {
+        this.petService = petService;
     }
 
     @GetMapping("/index")
-    public List<Person> getPeople() {
-        return personService.findAll(); // Jackson конвертирует эти объекты в JSON
+    public List<Pet> getDriverLicense() {
+        return petService.findAll();
     }
 
     @PostMapping("/create")
-    public ResponseEntity<HttpStatus> create(@RequestBody @Valid Person person,
-                                             BindingResult bindingResult) {
-        personService.create(person,bindingResult);
+    public ResponseEntity<HttpStatus> create(@RequestBody @Valid Pet pet, BindingResult bindingResult) {
+        petService.create(pet, bindingResult);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @PostMapping("/update")
-    public ResponseEntity<HttpStatus> update(@RequestBody @Valid Person person,
-                                             BindingResult bindingResult) {
-        personService.update(person,bindingResult);
+    public ResponseEntity<HttpStatus> update(@RequestBody @Valid Pet pet, BindingResult bindingResult) {
+        petService.update(pet, bindingResult);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<HttpStatus> deletePerson(@PathVariable int id){
-        personService.delete(id);
+    public ResponseEntity<HttpStatus> deleteDriverLicense(@PathVariable long id) {
+        petService.delete(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 

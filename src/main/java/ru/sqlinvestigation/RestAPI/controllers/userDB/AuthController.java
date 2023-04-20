@@ -54,7 +54,7 @@ public class AuthController {
         registrationService.register(person);
 
         String token = jwtUtil.generateToken(person.getUsername());
-        return Map.of("jwt-token", token);
+        return Map.of("jwt_token", token);
     }
 
     @PostMapping("/login")
@@ -70,7 +70,7 @@ public class AuthController {
         }
 
         String token = jwtUtil.generateToken(authenticationDTO.getUsername());
-        return Map.of("jwt-token", token);
+        return Map.of("jwt_token", token);
     }
 
     public Person convertToPerson(PersonDTO personDTO) {

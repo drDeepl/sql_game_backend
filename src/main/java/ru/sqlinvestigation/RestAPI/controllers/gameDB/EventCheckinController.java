@@ -5,48 +5,46 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.webjars.NotFoundException;
-import ru.sqlinvestigation.RestAPI.models.gameDB.DriverLicense;
-import ru.sqlinvestigation.RestAPI.services.gameDB.DriverLicenseService;
+import ru.sqlinvestigation.RestAPI.models.gameDB.EventCheckin;
+import ru.sqlinvestigation.RestAPI.services.gameDB.EventCheckinService;
 
 import javax.validation.Valid;
-import java.util.Collections;
 import java.util.List;
 
 @RestController // @Controller + @ResponseBody над каждым методом
-@RequestMapping("api/gameDB/driver_license")
-public class DriverLicenseController {
-    private final DriverLicenseService driverLicenseService;
+@RequestMapping("api/gameDB/event_checkin")
+public class EventCheckinController {
+    private final EventCheckinService eventCheckinService;
 
     @Autowired
-    public DriverLicenseController(DriverLicenseService driverLicenseService) {
-        this.driverLicenseService = driverLicenseService;
+    public EventCheckinController(EventCheckinService eventCheckinService) {
+        this.eventCheckinService = eventCheckinService;
     }
 
     @GetMapping("/index")
-    public List<DriverLicense> getDriverLicense() {
-        return driverLicenseService.findAll();
+    public List<EventCheckin> getDriverLicense() {
+        return eventCheckinService.findAll();
     }
 
     @PostMapping("/create")
-    public ResponseEntity<HttpStatus> create(@RequestBody @Valid DriverLicense driverLicense, BindingResult bindingResult) {
-        driverLicenseService.create(driverLicense, bindingResult);
+    public ResponseEntity<HttpStatus> create(@RequestBody @Valid EventCheckin eventCheckin, BindingResult bindingResult) {
+        eventCheckinService.create(eventCheckin, bindingResult);
         //Отправляем HTTP ответ с пустым телом и со статусом 200
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @PostMapping("/update")
-    public ResponseEntity<HttpStatus> update(@RequestBody @Valid DriverLicense driverLicense, BindingResult bindingResult) {
-        driverLicenseService.update(driverLicense, bindingResult);
+    public ResponseEntity<HttpStatus> update(@RequestBody @Valid EventCheckin eventCheckin, BindingResult bindingResult) {
+        eventCheckinService.update(eventCheckin, bindingResult);
         //Отправляем HTTP ответ с пустым телом и со статусом 200
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<HttpStatus> deleteDriverLicense(@PathVariable long id) {
-        driverLicenseService.delete(id);
+        eventCheckinService.delete(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 

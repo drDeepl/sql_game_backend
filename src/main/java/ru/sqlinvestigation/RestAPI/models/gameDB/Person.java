@@ -1,6 +1,9 @@
 package ru.sqlinvestigation.RestAPI.models.gameDB;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "person")
@@ -8,7 +11,7 @@ public class Person {
     @Id
     @Column(name = "person_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int person_id;
+    private long person_id;
     private String firstname;
     private String lastname;
     private String gender;
@@ -20,11 +23,11 @@ public class Person {
     public Person() {
     }
 
-    public int getPerson_id() {
+    public long getPerson_id() {
         return person_id;
     }
 
-    public void setPerson_id(int person_id) {
+    public void setPerson_id(long person_id) {
         this.person_id = person_id;
     }
 

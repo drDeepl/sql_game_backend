@@ -1,6 +1,9 @@
 package ru.sqlinvestigation.RestAPI.models.gameDB;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "driver_license")
@@ -9,10 +12,8 @@ public class DriverLicense {
     @Column(name = "license_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long license_id;
-
-    @ManyToOne()
-    @JoinColumn(name = "person_id", referencedColumnName = "person_id")
-    private Person person;
+    @NotNull
+    private Long person_id;
     private String plate_number;
     private String car_make;
     private String car_model;
@@ -20,20 +21,29 @@ public class DriverLicense {
     public DriverLicense() {
     }
 
+    public DriverLicense(long license_id, Person person, String plate_number, String car_make, String car_model, Long person_id) {
+        this.license_id = license_id;
+        this.plate_number = plate_number;
+        this.car_make = car_make;
+        this.car_model = car_model;
+        this.person_id = person_id;
+    }
+
+    public long getPerson_id() {
+        return person_id;
+    }
+
+    public void setPerson_id(long person_id) {
+        this.person_id = person_id;
+    }
+
+
     public long getLicense_id() {
         return license_id;
     }
 
-    public void setLicense_id(long license_id) {
+    public void setLicense_id(Long license_id) {
         this.license_id = license_id;
-    }
-
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
     }
 
     public String getPlate_number() {

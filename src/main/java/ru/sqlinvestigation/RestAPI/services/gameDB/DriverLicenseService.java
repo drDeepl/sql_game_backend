@@ -3,12 +3,13 @@ package ru.sqlinvestigation.RestAPI.services.gameDB;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.sqlinvestigation.RestAPI.dto.gameDB.DriverLicenseDTO;
+import org.springframework.validation.BindingResult;
+import org.webjars.NotFoundException;
 import ru.sqlinvestigation.RestAPI.models.gameDB.DriverLicense;
-import ru.sqlinvestigation.RestAPI.models.userDB.Person;
+import ru.sqlinvestigation.RestAPI.models.gameDB.Pet;
 import ru.sqlinvestigation.RestAPI.repositories.gameDB.DriverLicenseRepository;
 import ru.sqlinvestigation.RestAPI.repositories.gameDB.PersonRepository;
-import ru.sqlinvestigation.RestAPI.util.PersonNotFoundException;
+import ru.sqlinvestigation.RestAPI.util.BindingResultChecker;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
@@ -18,42 +19,52 @@ import java.util.Optional;
 @Service
 public class DriverLicenseService {
     private final DriverLicenseRepository driverLicenseRepository;
+    private final PersonRepository personRepository;
+
+    private final BindingResultChecker bindingResultChecker = new BindingResultChecker();
 
     @Autowired
-    public DriverLicenseService(DriverLicenseRepository driverLicenseRepository) {
+    public DriverLicenseService(DriverLicenseRepository driverLicenseRepository, PersonRepository personRepository) {
         this.driverLicenseRepository = driverLicenseRepository;
+        this.personRepository = personRepository;
     }
 
     public List<DriverLicense> findAll() throws EntityNotFoundException {
         return driverLicenseRepository.findAll();
     }
 
-    @Transactional(transactionManager = "gameTransactionManager")
-    public void delete(long id) {
-        Optional<DriverLicense> driverLicense = driverLicenseRepository.findById(id);
-        if (driverLicense.isPresent()) {
-            if (driverLicense.get().getLicense_id() == id)
-                driverLicenseRepository.deleteById(id);
-        }
-    }
-
-    public DriverLicense findOne(long id) {
-        Optional<DriverLicense> foundDriverLicense = driverLicenseRepository.findById(id);
-        return foundDriverLicense.orElseThrow(PersonNotFoundException::new);
-    }
-
-    @Transactional(transactionManager = "gameTransactionManager")
-    public void update(DriverLicense driverLicense) {
-        Optional<DriverLicense> oldDriverLicense = driverLicenseRepository.findById(driverLicense.getLicense_id());
-        if (oldDriverLicense.isPresent()) {
-            driverLicenseRepository.save(driverLicense);
-        }
-    }
-    public boolean existsById(DriverLicense driverLicense){
-        return driverLicenseRepository.existsById(driverLicense.getLicense_id());
-    }
-
-    public void create(DriverLicense driverLicense) {
+    public void create(DriverLicense driverLicense, BindingResult bindingResult) {
+        bindingResultChecker.check(bindingResult);
+        if (existsById(driverLicense.getLicense_id()))
+            throw new NotFoundException(String.format("Row with id %s already exists", driverLicense.getLicense_id()));
+        if (!existsByPersonId(driverLicense.getPerson_id()))
+            throw new NotFoundException(String.format("Entity with id %s not found", driverLicense.getPerson_id()));
         driverLicenseRepository.save(driverLicense);
     }
+
+    public void update(DriverLicense driverLicense, BindingResult bindingResult) {
+        bindingResultChecker.check(bindingResult);
+        // проверяем, существуют ли записи с таким идентификаторами
+        if (!existsById(driverLicense.getLicense_id()))
+            throw new NotFoundException(String.format("Row with id %s was not found", driverLicense.getLicense_id()));
+        if (!existsByPersonId(driverLicense.getPerson_id()))
+            throw new NotFoundException(String.format("Entity with id %s not found", driverLicense.getPerson_id()));
+        driverLicenseRepository.save(driverLicense);
+
+    }
+
+    @Transactional(transactionManager = "gameTransactionManager")
+    public void delete(long id) {
+        if (!existsById(id))
+            throw new NotFoundException(String.format("Entity with id %s not found", id));
+        driverLicenseRepository.deleteById(id);
+    }
+    public boolean existsById(long id ) {
+        return driverLicenseRepository.existsById(id);
+    }
+
+    public boolean existsByPersonId(long id) {
+        return personRepository.existsById(id);
+    }
+
 }
