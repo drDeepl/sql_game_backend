@@ -10,12 +10,20 @@ public class Address {
     @Column(name = "address_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long address_id;
-    private String city;
+    private String street;
     private String number;
     @NotNull
     private Long city_id;
 
     public Address() {
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
     }
 
     public long getAddress_id() {
@@ -24,14 +32,6 @@ public class Address {
 
     public void setAddress_id(long address_id) {
         this.address_id = address_id;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
     }
 
     public String getNumber() {

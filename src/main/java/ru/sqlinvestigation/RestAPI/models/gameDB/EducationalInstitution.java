@@ -12,7 +12,7 @@ public class EducationalInstitution {
     private long edu_id;
     private String name;
     @NotNull
-    private Long adress_id;
+    private Long address_id;
 
     public EducationalInstitution() {
     }
@@ -33,11 +33,11 @@ public class EducationalInstitution {
         this.name = name;
     }
 
-    public Long getAdress_id() {
-        return adress_id;
+    public Long getAddress_id() {
+        return address_id;
     }
 
-    public void setAdress_id(Long adress_id) {
-        this.adress_id = adress_id;
+    public void setAddress_id(Long adress_id) {
+        this.address_id = adress_id;
     }
 }

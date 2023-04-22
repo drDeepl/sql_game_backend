@@ -12,6 +12,7 @@ public class CrimeSceneReport {
     private long CSR_id;
     private String description;
     private String type;
+    @NotNull
     private Long city_id;
 
     public CrimeSceneReport() {

@@ -35,8 +35,8 @@ public class EDUService {
         bindingResultChecker.check(bindingResult);
         if (existsById(edu.getEdu_id()))
             throw new NotFoundException(String.format("Row with id %s already exists", edu.getEdu_id()));
-        if (!existsByAddressId(edu.getAdress_id()))
-            throw new NotFoundException(String.format("Entity with id %s not found", edu.getAdress_id()));
+        if (!existsByAddressId(edu.getAddress_id()))
+            throw new NotFoundException(String.format("Entity with id %s not found", edu.getAddress_id()));
         eduRepository.save(edu);
     }
 
@@ -45,8 +45,8 @@ public class EDUService {
         // проверяем, существуют ли записи с таким идентификаторами
         if (!existsById(edu.getEdu_id()))
             throw new NotFoundException(String.format("Row with id %s was not found", edu.getEdu_id()));
-        if (!existsByAddressId(edu.getAdress_id()))
-            throw new NotFoundException(String.format("Entity with id %s not found", edu.getAdress_id()));
+        if (!existsByAddressId(edu.getAddress_id()))
+            throw new NotFoundException(String.format("Entity with id %s not found", edu.getAddress_id()));
         eduRepository.save(edu);
     }
 
