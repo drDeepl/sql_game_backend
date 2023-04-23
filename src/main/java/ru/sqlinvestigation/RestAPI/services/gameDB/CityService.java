@@ -17,11 +17,12 @@ import java.util.List;
 public class CityService {
     private final CityRepository cityRepository;
 
-    private final BindingResultChecker bindingResultChecker = new BindingResultChecker();
+    private final BindingResultChecker bindingResultChecker;
 
     @Autowired
-    public CityService(CityRepository cityRepository) {
+    public CityService(CityRepository cityRepository, BindingResultChecker bindingResultChecker) {
         this.cityRepository = cityRepository;
+        this.bindingResultChecker = bindingResultChecker;
     }
 
     public List<City> findAll() throws EntityNotFoundException {

@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import ru.sqlinvestigation.RestAPI.util.BindingResultChecker;
 
 @SpringBootApplication
 public class FirstRestAppApplication {
@@ -17,5 +18,8 @@ public class FirstRestAppApplication {
 	public ModelMapper modelMapper() {
 		return new ModelMapper();
 	}
+
+	@Bean
+	public BindingResultChecker bindingResultChecker(){ return new BindingResultChecker();}
 
 }

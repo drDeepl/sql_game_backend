@@ -10,7 +10,7 @@ user.datasource.password=
 
 
 jwt_secret=
-
+jwt_time_in_second=
 
 
 

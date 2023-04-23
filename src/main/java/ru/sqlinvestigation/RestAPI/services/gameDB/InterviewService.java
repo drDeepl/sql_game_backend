@@ -19,14 +19,15 @@ public class InterviewService {
     private final InterviewRepository interviewRepository;
     private final PersonRepository personRepository;
     private final CrimeSceneReportRepository crimeSceneReportRepository;
-    private final BindingResultChecker bindingResultChecker = new BindingResultChecker();
+    private final BindingResultChecker bindingResultChecker;
 
     @Autowired
     public InterviewService(InterviewRepository interviewRepository, PersonRepository personRepository,
-                            CrimeSceneReportRepository crimeSceneReportRepository) {
+                            CrimeSceneReportRepository crimeSceneReportRepository, BindingResultChecker bindingResultChecker) {
         this.interviewRepository = interviewRepository;
         this.personRepository = personRepository;
         this.crimeSceneReportRepository = crimeSceneReportRepository;
+        this.bindingResultChecker = bindingResultChecker;
     }
 
     public List<Interview> findAll() throws EntityNotFoundException {

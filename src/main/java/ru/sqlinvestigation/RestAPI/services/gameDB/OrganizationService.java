@@ -20,12 +20,13 @@ import java.util.List;
 public class OrganizationService {
     private final OrganizationRepository organizationRepository;
     private final AddressRepository addressRepository;
-    private final BindingResultChecker bindingResultChecker = new BindingResultChecker();
+    private final BindingResultChecker bindingResultChecker;
 
     @Autowired
-    public OrganizationService(OrganizationRepository organizationRepository, PersonRepository personRepository, WorkersRepository workersRepository, AddressRepository addressRepository) {
+    public OrganizationService(OrganizationRepository organizationRepository, PersonRepository personRepository, WorkersRepository workersRepository, AddressRepository addressRepository, BindingResultChecker bindingResultChecker) {
         this.organizationRepository = organizationRepository;
         this.addressRepository = addressRepository;
+        this.bindingResultChecker = bindingResultChecker;
     }
 
     public List<Organization> findAll() throws EntityNotFoundException {

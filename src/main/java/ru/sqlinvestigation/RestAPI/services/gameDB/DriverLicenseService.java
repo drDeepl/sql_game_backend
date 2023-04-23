@@ -6,14 +6,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.webjars.NotFoundException;
 import ru.sqlinvestigation.RestAPI.models.gameDB.DriverLicense;
-import ru.sqlinvestigation.RestAPI.models.gameDB.Pet;
 import ru.sqlinvestigation.RestAPI.repositories.gameDB.DriverLicenseRepository;
 import ru.sqlinvestigation.RestAPI.repositories.gameDB.PersonRepository;
 import ru.sqlinvestigation.RestAPI.util.BindingResultChecker;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -21,12 +19,13 @@ public class DriverLicenseService {
     private final DriverLicenseRepository driverLicenseRepository;
     private final PersonRepository personRepository;
 
-    private final BindingResultChecker bindingResultChecker = new BindingResultChecker();
+    private final BindingResultChecker bindingResultChecker;
 
     @Autowired
-    public DriverLicenseService(DriverLicenseRepository driverLicenseRepository, PersonRepository personRepository) {
+    public DriverLicenseService(DriverLicenseRepository driverLicenseRepository, PersonRepository personRepository, BindingResultChecker bindingResultChecker) {
         this.driverLicenseRepository = driverLicenseRepository;
         this.personRepository = personRepository;
+        this.bindingResultChecker = bindingResultChecker;
     }
 
     public List<DriverLicense> findAll() throws EntityNotFoundException {

@@ -13,7 +13,6 @@ import ru.sqlinvestigation.RestAPI.util.BindingResultChecker;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -21,12 +20,13 @@ public class PetService {
     private final PetRepository petRepository;
     private final PersonRepository personRepository;
 
-    private final BindingResultChecker bindingResultChecker = new BindingResultChecker();
+    private final BindingResultChecker bindingResultChecker;
 
     @Autowired
-    public PetService(PetRepository petRepository, PersonRepository personRepository) {
+    public PetService(PetRepository petRepository, PersonRepository personRepository, BindingResultChecker bindingResultChecker) {
         this.petRepository = petRepository;
         this.personRepository = personRepository;
+        this.bindingResultChecker = bindingResultChecker;
     }
 
     public List<Pet> findAll() throws EntityNotFoundException {

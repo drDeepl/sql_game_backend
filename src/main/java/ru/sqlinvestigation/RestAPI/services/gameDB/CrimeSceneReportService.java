@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.webjars.NotFoundException;
 import ru.sqlinvestigation.RestAPI.models.gameDB.CrimeSceneReport;
-import ru.sqlinvestigation.RestAPI.repositories.gameDB.AddressRepository;
 import ru.sqlinvestigation.RestAPI.repositories.gameDB.CityRepository;
 import ru.sqlinvestigation.RestAPI.repositories.gameDB.CrimeSceneReportRepository;
 import ru.sqlinvestigation.RestAPI.util.BindingResultChecker;
@@ -20,13 +19,14 @@ public class CrimeSceneReportService {
     private final CrimeSceneReportRepository reportRepository;
     private final CityRepository cityRepository;
 
-    private final BindingResultChecker bindingResultChecker = new BindingResultChecker();
+    private final BindingResultChecker bindingResultChecker;
 
     @Autowired
     public CrimeSceneReportService(CrimeSceneReportRepository reportRepository,
-                                   CityRepository cityRepository) {
+                                   CityRepository cityRepository, BindingResultChecker bindingResultChecker) {
         this.reportRepository = reportRepository;
         this.cityRepository = cityRepository;
+        this.bindingResultChecker = bindingResultChecker;
     }
 
     public List<CrimeSceneReport> findAll() throws EntityNotFoundException {

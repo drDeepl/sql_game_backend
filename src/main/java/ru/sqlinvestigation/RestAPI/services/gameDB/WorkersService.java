@@ -20,14 +20,15 @@ public class WorkersService {
     private final WorkersRepository workersRepository;
     private final PersonRepository personRepository;
     private final OrganizationRepository organizationRepository;
-    private final BindingResultChecker bindingResultChecker = new BindingResultChecker();
+    private final BindingResultChecker bindingResultChecker;
 
     @Autowired
     public WorkersService(WorkersRepository workersRepository, PersonRepository personRepository,
-                          OrganizationRepository organizationRepository) {
+                          OrganizationRepository organizationRepository, BindingResultChecker bindingResultChecker) {
         this.workersRepository = workersRepository;
         this.personRepository = personRepository;
         this.organizationRepository = organizationRepository;
+        this.bindingResultChecker = bindingResultChecker;
     }
 
     public List<Workers> findAll() throws EntityNotFoundException {

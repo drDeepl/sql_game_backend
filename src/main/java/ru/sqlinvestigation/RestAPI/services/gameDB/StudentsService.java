@@ -20,14 +20,15 @@ public class StudentsService {
     private final StudentsRepository studentsRepository;
     private final PersonRepository personRepository;
     private final EDURepository eduRepository;
-    private final BindingResultChecker bindingResultChecker = new BindingResultChecker();
+    private final BindingResultChecker bindingResultChecker;
 
     @Autowired
     public StudentsService(StudentsRepository studentsRepository, PersonRepository personRepository,
-                           EDURepository eduRepository) {
+                           EDURepository eduRepository, BindingResultChecker bindingResultChecker) {
         this.studentsRepository = studentsRepository;
         this.personRepository = personRepository;
         this.eduRepository = eduRepository;
+        this.bindingResultChecker = bindingResultChecker;
     }
 
     public List<Students> findAll() throws EntityNotFoundException {

@@ -19,12 +19,13 @@ public class EventCheckinService {
     private final EventCheckinRepository eventCheckinRepository;
     private final PersonRepository personRepository;
 
-    private final BindingResultChecker bindingResultChecker = new BindingResultChecker();
+    private final BindingResultChecker bindingResultChecker;
 
     @Autowired
-    public EventCheckinService(EventCheckinRepository eventCheckinRepository, PersonRepository personRepository) {
+    public EventCheckinService(EventCheckinRepository eventCheckinRepository, PersonRepository personRepository, BindingResultChecker bindingResultChecker) {
         this.eventCheckinRepository = eventCheckinRepository;
         this.personRepository = personRepository;
+        this.bindingResultChecker = bindingResultChecker;
     }
 
     public List<EventCheckin> findAll() throws EntityNotFoundException {

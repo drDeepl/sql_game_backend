@@ -19,12 +19,13 @@ public class EDUService {
     private final EDURepository eduRepository;
     private final AddressRepository addressRepository;
 
-    private final BindingResultChecker bindingResultChecker = new BindingResultChecker();
+    private final BindingResultChecker bindingResultChecker;
 
     @Autowired
-    public EDUService(EDURepository eduRepository, AddressRepository addressRepository) {
+    public EDUService(EDURepository eduRepository, AddressRepository addressRepository, BindingResultChecker bindingResultChecker) {
         this.eduRepository = eduRepository;
         this.addressRepository = addressRepository;
+        this.bindingResultChecker = bindingResultChecker;
     }
 
     public List<EducationalInstitution> findAll() throws EntityNotFoundException {

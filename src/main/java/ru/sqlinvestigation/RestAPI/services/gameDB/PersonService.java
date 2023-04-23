@@ -6,23 +6,22 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.webjars.NotFoundException;
 import ru.sqlinvestigation.RestAPI.models.gameDB.Person;
-import ru.sqlinvestigation.RestAPI.models.gameDB.Pet;
 import ru.sqlinvestigation.RestAPI.repositories.gameDB.PersonRepository;
 import ru.sqlinvestigation.RestAPI.util.BindingResultChecker;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
 public class PersonService {
     private final PersonRepository personRepository;
-    private final BindingResultChecker bindingResultChecker = new BindingResultChecker();
+    private final BindingResultChecker bindingResultChecker;
 
     @Autowired
-    public PersonService(PersonRepository personRepository) {
+    public PersonService(PersonRepository personRepository, BindingResultChecker bindingResultChecker) {
         this.personRepository = personRepository;
+        this.bindingResultChecker = bindingResultChecker;
     }
 
     public List<Person> findAll() throws EntityNotFoundException {
