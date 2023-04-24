@@ -8,9 +8,11 @@ user.datasource.url=jdbc:postgresql:
 user.datasource.username=
 user.datasource.password=
 
+jwt.secret.access=
+jwt.secret.refresh=
 
-jwt_secret=
-jwt_time_in_second=
+jwt.time.access =
+jwt.time.refresh =
 
 
 

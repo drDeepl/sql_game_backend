@@ -5,31 +5,31 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import ru.sqlinvestigation.RestAPI.models.userDB.Person;
-import ru.sqlinvestigation.RestAPI.services.userDB.PersonDetailsService;
+import ru.sqlinvestigation.RestAPI.models.userDB.User;
+import ru.sqlinvestigation.RestAPI.services.userDB.UserDetailsServiceImpl;
 
 
 @Component
 public class PersonValidator implements Validator {
 
-    private final PersonDetailsService personDetailsService;
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
 
     @Autowired
-    public PersonValidator(PersonDetailsService personDetailsService) {
-        this.personDetailsService = personDetailsService;
+    public PersonValidator(UserDetailsServiceImpl userDetailsServiceImpl) {
+        this.userDetailsServiceImpl = userDetailsServiceImpl;
     }
 
     @Override
     public boolean supports(Class<?> aClass) {
-        return Person.class.equals(aClass);
+        return User.class.equals(aClass);
     }
 
     @Override
     public void validate(Object o, Errors errors) {
-        Person person = (Person) o;
+        User user = (User) o;
 
         try {
-            personDetailsService.loadUserByUsername(person.getUsername());
+            userDetailsServiceImpl.loadUserByUsername(user.getUsername());
         } catch (UsernameNotFoundException ignored) {
             return; // все ок, пользователь не найден
         }

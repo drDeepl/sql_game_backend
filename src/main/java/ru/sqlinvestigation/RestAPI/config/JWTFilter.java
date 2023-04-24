@@ -1,61 +1,51 @@
 package ru.sqlinvestigation.RestAPI.config;
 
-import com.auth0.jwt.exceptions.JWTVerificationException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import io.jsonwebtoken.Claims;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import org.springframework.web.filter.OncePerRequestFilter;
-import ru.sqlinvestigation.RestAPI.security.JWTUtil;
-import ru.sqlinvestigation.RestAPI.services.userDB.PersonDetailsService;
+import org.springframework.util.StringUtils;
+import org.springframework.web.filter.GenericFilterBean;
+import ru.sqlinvestigation.RestAPI.models.userDB.JwtAuthentication;
+import ru.sqlinvestigation.RestAPI.services.userDB.JwtProvider;
+import ru.sqlinvestigation.RestAPI.services.userDB.JwtUtils;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-public class JWTFilter extends OncePerRequestFilter {
+public class JwtFilter extends GenericFilterBean {
 
-    private final JWTUtil jwtUtil;
-    private final PersonDetailsService personDetailsService;
+    private static final String AUTHORIZATION = "Authorization";
 
-    public JWTFilter(JWTUtil jwtUtil, PersonDetailsService personDetailsService) {
-        this.jwtUtil = jwtUtil;
-        this.personDetailsService = personDetailsService;
+    private final JwtProvider jwtProvider;
+
+    public JwtFilter(JwtProvider jwtProvider) {
+        this.jwtProvider = jwtProvider;
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-        String authHeader = httpServletRequest.getHeader("Authorization");
-
-        if (authHeader != null && !authHeader.isBlank() && authHeader.startsWith("Bearer ")) {
-            String jwt = authHeader.substring(7);
-
-            if (jwt.isBlank()) {
-                httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,
-                        "Invalid JWT Token in Bearer Header");
-            } else {
-                try {
-                    String username = jwtUtil.validateTokenAndRetrieveClaim(jwt);
-                    UserDetails userDetails = personDetailsService.loadUserByUsername(username);
-
-                    UsernamePasswordAuthenticationToken authToken =
-                            new UsernamePasswordAuthenticationToken(userDetails,
-                                    userDetails.getPassword(),
-                                    userDetails.getAuthorities());
-
-                    if (SecurityContextHolder.getContext().getAuthentication() == null) {
-                        SecurityContextHolder.getContext().setAuthentication(authToken);
-                    }
-                } catch (JWTVerificationException exc) {
-                    httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,
-                            "Invalid JWT Token");
-                }
-            }
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain fc)
+            throws IOException, ServletException {
+        final String token = getTokenFromRequest((HttpServletRequest) request);
+        if (token != null && jwtProvider.validateAccessToken(token)) {
+            final Claims claims = jwtProvider.getAccessClaims(token);
+            final JwtAuthentication jwtInfoToken = JwtUtils.generate(claims);
+            jwtInfoToken.setAuthenticated(true);
+            SecurityContextHolder.getContext().setAuthentication(jwtInfoToken);
         }
-
-        filterChain.doFilter(httpServletRequest, httpServletResponse);
+        fc.doFilter(request, response);
     }
+
+    private String getTokenFromRequest(HttpServletRequest request) {
+        final String bearer = request.getHeader(AUTHORIZATION);
+        if (StringUtils.hasText(bearer) && bearer.startsWith("Bearer ")) {
+            return bearer.substring(7);
+        }
+        return null;
+    }
+
 }
