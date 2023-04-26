@@ -1,4 +1,4 @@
-package ru.sqlinvestigation.RestAPI.models.userDB;
+package ru.sqlinvestigation.RestAPI.models.userDB.JWT;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;

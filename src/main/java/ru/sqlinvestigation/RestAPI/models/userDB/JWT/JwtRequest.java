@@ -1,4 +1,4 @@
-package ru.sqlinvestigation.RestAPI.models.userDB;
+package ru.sqlinvestigation.RestAPI.models.userDB.JWT;
 
 public class JwtRequest {
     private String username;

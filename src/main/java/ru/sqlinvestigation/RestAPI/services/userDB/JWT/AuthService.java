@@ -1,4 +1,4 @@
-package ru.sqlinvestigation.RestAPI.services.userDB;
+package ru.sqlinvestigation.RestAPI.services.userDB.JWT;
 
 import io.jsonwebtoken.Claims;
 import org.springframework.lang.NonNull;
@@ -6,6 +6,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.sqlinvestigation.RestAPI.models.userDB.*;
+import ru.sqlinvestigation.RestAPI.models.userDB.JWT.JwtAuthentication;
+import ru.sqlinvestigation.RestAPI.models.userDB.JWT.JwtRequest;
+import ru.sqlinvestigation.RestAPI.models.userDB.JWT.JwtResponse;
+import ru.sqlinvestigation.RestAPI.models.userDB.JWT.RefreshToken;
+import ru.sqlinvestigation.RestAPI.services.userDB.UserDetailsServiceImpl;
+import ru.sqlinvestigation.RestAPI.services.userDB.UserService;
 
 @Service
 public class AuthService {
@@ -42,7 +48,7 @@ public class AuthService {
         }
     }
 
-    public JwtResponse getAccessToken(@NonNull String refreshToken) {
+    public JwtResponse getAccessToken(@NonNull String refreshToken) throws Exception {
         if (jwtProvider.validateRefreshToken(refreshToken)) {
             final Claims claims = jwtProvider.getRefreshClaims(refreshToken);
             final String userId = claims.getSubject();
@@ -57,7 +63,7 @@ public class AuthService {
         return new JwtResponse(null, null);
     }
 
-    public JwtResponse refresh(@NonNull String refreshToken) {
+    public JwtResponse refresh(@NonNull String refreshToken) throws Exception {
         if (jwtProvider.validateRefreshToken(refreshToken)) {
             final Claims claims = jwtProvider.getRefreshClaims(refreshToken);
             final String userId = claims.getSubject();

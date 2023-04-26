@@ -1,7 +1,7 @@
-package ru.sqlinvestigation.RestAPI.services.userDB;
+package ru.sqlinvestigation.RestAPI.services.userDB.JWT;
 
 import io.jsonwebtoken.Claims;
-import ru.sqlinvestigation.RestAPI.models.userDB.JwtAuthentication;
+import ru.sqlinvestigation.RestAPI.models.userDB.JWT.JwtAuthentication;
 import ru.sqlinvestigation.RestAPI.models.userDB.Role;
 
 import java.util.List;

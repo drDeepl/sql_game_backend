@@ -1,4 +1,4 @@
-package ru.sqlinvestigation.RestAPI.services.userDB;
+package ru.sqlinvestigation.RestAPI.services.userDB.JWT;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -62,15 +62,15 @@ public class JwtProvider {
                 .compact();
     }
 
-    public boolean validateAccessToken(@NonNull String accessToken) {
+    public boolean validateAccessToken(@NonNull String accessToken) throws Exception {
         return validateToken(accessToken, jwtAccessSecret);
     }
 
-    public boolean validateRefreshToken(@NonNull String refreshToken) {
+    public boolean validateRefreshToken(@NonNull String refreshToken) throws Exception {
         return validateToken(refreshToken, jwtRefreshSecret);
     }
 
-    private boolean validateToken(@NonNull String token, @NonNull Key secret) {
+    private boolean validateToken(@NonNull String token, @NonNull Key secret) throws Exception {
         try {
             Jwts.parserBuilder()
                     .setSigningKey(secret)
@@ -79,14 +79,23 @@ public class JwtProvider {
             return true;
         } catch (ExpiredJwtException expEx) {
             System.out.println("Token expired " + expEx);
+//            throw new ExpiredJwtException(expEx.getHeader(), expEx.getClaims(), expEx.getMessage());
+
         } catch (UnsupportedJwtException unsEx) {
             System.out.println("Unsupported jwt " + unsEx);
+//            throw new UnsupportedJwtException(unsEx.getMessage());
+
         } catch (MalformedJwtException mjEx) {
             System.out.println("Malformed jwt " + mjEx);
+//            throw new MalformedJwtException(mjEx.getMessage());
+
         } catch (SignatureException sEx) {
             System.out.println("Invalid signature " + sEx);
+//            throw new SignatureException(sEx.getMessage());
+
         } catch (Exception e) {
             System.out.println("invalid token " + e);
+//            throw new Exception(e.getMessage());
         }
         return false;
     }

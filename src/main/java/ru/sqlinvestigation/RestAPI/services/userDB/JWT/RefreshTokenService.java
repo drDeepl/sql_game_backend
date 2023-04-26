@@ -1,11 +1,10 @@
-package ru.sqlinvestigation.RestAPI.services.userDB;
+package ru.sqlinvestigation.RestAPI.services.userDB.JWT;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.BindingResult;
 import org.webjars.NotFoundException;
-import ru.sqlinvestigation.RestAPI.models.userDB.RefreshToken;
+import ru.sqlinvestigation.RestAPI.models.userDB.JWT.RefreshToken;
 import ru.sqlinvestigation.RestAPI.repositories.userDB.RefreshTokenRepository;
 import ru.sqlinvestigation.RestAPI.repositories.userDB.UserRepository;
 
