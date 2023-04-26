@@ -17,7 +17,7 @@ import ru.sqlinvestigation.RestAPI.services.userDB.UserService;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("api/user/")
+@RequestMapping("api/userDB/user")
 public class UserController {
 
     private final UserDetailsServiceImpl userDetailsService;

@@ -1,17 +1,16 @@
-package ru.sqlinvestigation.RestAPI.security;
+package ru.sqlinvestigation.RestAPI.models.userDB;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import ru.sqlinvestigation.RestAPI.models.userDB.User;
 
 import java.util.Collection;
 import java.util.Collections;
 
-public class PersonDetails implements UserDetails {
+public class UserDetails implements org.springframework.security.core.userdetails.UserDetails {
     private final User user;
 
-    public PersonDetails(User user) {
+    public UserDetails(User user) {
         this.user = user;
     }
 

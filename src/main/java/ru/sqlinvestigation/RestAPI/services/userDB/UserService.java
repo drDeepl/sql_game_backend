@@ -1,19 +1,15 @@
 package ru.sqlinvestigation.RestAPI.services.userDB;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.webjars.NotFoundException;
-import ru.sqlinvestigation.RestAPI.models.userDB.RefreshToken;
+import ru.sqlinvestigation.RestAPI.models.userDB.JWT.RefreshToken;
 import ru.sqlinvestigation.RestAPI.models.userDB.User;
 import ru.sqlinvestigation.RestAPI.repositories.userDB.RefreshTokenRepository;
 import ru.sqlinvestigation.RestAPI.repositories.userDB.UserRepository;
-import ru.sqlinvestigation.RestAPI.security.PersonDetails;
 import ru.sqlinvestigation.RestAPI.util.BindingResultChecker;
 
 import java.util.Optional;
@@ -36,8 +32,6 @@ public class UserService {
         this.bindingResultChecker = bindingResultChecker;
         this.passwordEncoder = passwordEncoder;
     }
-
-
 
     public Optional<User> getById(Long id) throws NotFoundException {
         return userRepository.findById(id);

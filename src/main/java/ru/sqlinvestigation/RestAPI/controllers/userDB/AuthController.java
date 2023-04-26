@@ -5,10 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.sqlinvestigation.RestAPI.models.userDB.JwtRequest;
-import ru.sqlinvestigation.RestAPI.models.userDB.JwtResponse;
-import ru.sqlinvestigation.RestAPI.models.userDB.RefreshJwtRequest;
-import ru.sqlinvestigation.RestAPI.services.userDB.AuthService;
+import ru.sqlinvestigation.RestAPI.models.userDB.JWT.JwtRequest;
+import ru.sqlinvestigation.RestAPI.models.userDB.JWT.JwtResponse;
+import ru.sqlinvestigation.RestAPI.models.userDB.JWT.RefreshJwtRequest;
+import ru.sqlinvestigation.RestAPI.services.userDB.JWT.AuthService;
 
 @RestController
 @RequestMapping("api/auth")
@@ -28,13 +28,13 @@ public class AuthController {
     }
 
     @PostMapping("/token")
-    public ResponseEntity<JwtResponse> getNewAccessToken(@RequestBody RefreshJwtRequest request) {
+    public ResponseEntity<JwtResponse> getNewAccessToken(@RequestBody RefreshJwtRequest request) throws Exception {
         final JwtResponse token = authService.getAccessToken(request.getRefreshToken());
         return ResponseEntity.ok(token);
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<JwtResponse> getNewRefreshToken(@RequestBody RefreshJwtRequest request) {
+    public ResponseEntity<JwtResponse> getNewRefreshToken(@RequestBody RefreshJwtRequest request) throws Exception {
         final JwtResponse token = authService.refresh(request.getRefreshToken());
         return ResponseEntity.ok(token);
     }
