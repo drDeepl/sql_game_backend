@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import org.webjars.NotFoundException;
 import ru.sqlinvestigation.RestAPI.dto.userDB.UserDTO;
 import ru.sqlinvestigation.RestAPI.models.userDB.Role;
+import ru.sqlinvestigation.RestAPI.models.userDB.Story;
 import ru.sqlinvestigation.RestAPI.models.userDB.User;
 import ru.sqlinvestigation.RestAPI.services.userDB.UserDetailsServiceImpl;
 import ru.sqlinvestigation.RestAPI.services.userDB.UserService;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/userDB/user")
@@ -29,6 +31,11 @@ public class UserController {
         this.userDetailsService = userDetailsService;
         this.userService = userService;
         this.modelMapper = modelMapper;
+    }
+
+    @GetMapping("/index")
+    public List<User> get() {
+        return userService.findAll();
     }
 
     @PostMapping("/registration")

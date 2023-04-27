@@ -9,10 +9,16 @@ public class StoryImage {
     @Column(name = "id_stories")
     private long id_stories;
 
+    @Lob
     @Column(name = "image")
-    private String image;
+    private byte[] image;
 
     public StoryImage() {
+    }
+
+    public StoryImage(long id_stories, byte[] image) {
+        this.id_stories = id_stories;
+        this.image = image;
     }
 
     public long getId_stories() {
@@ -23,11 +29,11 @@ public class StoryImage {
         this.id_stories = id_stories;
     }
 
-    public String getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 }

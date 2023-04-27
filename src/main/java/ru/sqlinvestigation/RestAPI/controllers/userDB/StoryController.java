@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.webjars.NotFoundException;
+import ru.sqlinvestigation.RestAPI.dto.userDB.StoryDTO;
 import ru.sqlinvestigation.RestAPI.models.userDB.Story;
 import ru.sqlinvestigation.RestAPI.services.userDB.StoryService;
 
@@ -27,6 +28,11 @@ public class StoryController {
     @GetMapping("/index")
     public List<Story> get() {
         return storyService.findAll();
+    }
+
+    @GetMapping("/getById/{id}")
+    public StoryDTO getById(@PathVariable long id) {
+        return storyService.findById(id);
     }
 
     @PostMapping("/create")

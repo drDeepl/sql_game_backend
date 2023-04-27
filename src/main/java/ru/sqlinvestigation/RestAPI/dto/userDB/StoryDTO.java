@@ -1,36 +1,19 @@
-package ru.sqlinvestigation.RestAPI.models.userDB;
+package ru.sqlinvestigation.RestAPI.dto.userDB;
 
-import javax.persistence.*;
-import java.util.Objects;
-
-@Entity
-@Table(name = "stories")
-public class Story {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    @Column(name = "id")
+public class StoryDTO {
     private long id;
-
-    @Column(name = "title")
     private String title;
-
-    @Column(name = "difficulty")
     private String difficulty;
-
-    @Column(name = "description")
     private String description;
-
-    @Column(name = "story_text")
     private String story_text;
 
-    @Column(name = "answer")
-    private String answer;
-
-
-    public Story() {
+    public StoryDTO() {
     }
 
-    public Story(Long id, String title, String difficulty, String description, String story_text) {
+    public StoryDTO(long id, String title, String difficulty, String description, String story_text) {
+    }
+
+    public StoryDTO(long id, String title) {
     }
 
     public long getId() {
@@ -71,13 +54,5 @@ public class Story {
 
     public void setStory_text(String story_text) {
         this.story_text = story_text;
-    }
-
-    public String getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(String answer) {
-        this.answer = answer;
     }
 }

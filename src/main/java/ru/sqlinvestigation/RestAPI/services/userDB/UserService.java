@@ -6,12 +6,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.webjars.NotFoundException;
+import ru.sqlinvestigation.RestAPI.models.gameDB.City;
 import ru.sqlinvestigation.RestAPI.models.userDB.JWT.RefreshToken;
 import ru.sqlinvestigation.RestAPI.models.userDB.User;
 import ru.sqlinvestigation.RestAPI.repositories.userDB.RefreshTokenRepository;
 import ru.sqlinvestigation.RestAPI.repositories.userDB.UserRepository;
 import ru.sqlinvestigation.RestAPI.util.BindingResultChecker;
 
+import javax.persistence.EntityNotFoundException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -39,6 +42,10 @@ public class UserService {
 
     public Optional<User> getByUsername(String username) throws NotFoundException {
         return userRepository.findByUsername(username);
+    }
+
+    public List<User> findAll() throws EntityNotFoundException {
+        return userRepository.findAll();
     }
 
     @Transactional(transactionManager = "userTransactionManager")

@@ -3,12 +3,15 @@ package ru.sqlinvestigation.RestAPI.services.userDB;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import org.webjars.NotFoundException;
 import ru.sqlinvestigation.RestAPI.models.userDB.StoryImage;
 import ru.sqlinvestigation.RestAPI.repositories.userDB.StoryImageRepository;
 import ru.sqlinvestigation.RestAPI.repositories.userDB.StoryRepository;
 
 import javax.persistence.EntityNotFoundException;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,30 +32,28 @@ public class StoryImageService {
         return storyImageRepository.findAll().stream().map(StoryImage::getId_stories).collect(Collectors.toList());
     }
 
-    public String findByStoryId(long id) throws Exception {
+    public byte[] findByStoryId(long id) throws Exception {
         Optional<StoryImage> image = storyImageRepository.findById(id);
         if (image.isPresent()) {
             return image.get().getImage();
         }
-        throw new Exception(String.format("Image is empty"));
+        throw new Exception("null image");
     }
 
-    public void create(StoryImage storyImage) {
-        if (existsById(storyImage.getId_stories()))
-            throw new NotFoundException(String.format("Row with id %s already exists", storyImage.getId_stories()));
-        if (!existsByStoryId(storyImage.getId_stories()))
-            throw new NotFoundException(String.format("Row with id %s was not found", storyImage.getId_stories()));
-        storyImageRepository.save(storyImage);
+    public void create(MultipartFile file, long id) throws IOException {
+        if (!existsByStoryId(id))
+            throw new NotFoundException(String.format("Row with id %s was not found", id));
+        storyImageRepository.save(new StoryImage(id,  file.getBytes()));
     }
 
     @Transactional(transactionManager = "userTransactionManager")
-    public void update(StoryImage storyImage) {
+    public void update(MultipartFile file, long id) throws IOException{
         // проверяем, существуют ли записи с таким идентификаторами
-        if (!existsById(storyImage.getId_stories()))
-            throw new NotFoundException(String.format("Row with id %s was not found", storyImage.getId_stories()));
-        if (!existsByStoryId(storyImage.getId_stories()))
-            throw new NotFoundException(String.format("Row with id %s was not found", storyImage.getId_stories()));
-        storyImageRepository.save(storyImage);
+        if (!existsById(id))
+            throw new NotFoundException(String.format("Row with id %s was not found", id));
+        if (!existsByStoryId(id))
+            throw new NotFoundException(String.format("Row with id %s was not found", id));
+        storyImageRepository.save(new StoryImage(id,  file.getBytes()));
     }
 
     @Transactional(transactionManager = "userTransactionManager")
